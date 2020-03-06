@@ -6,11 +6,34 @@ import java.util.List;
 import java.util.Scanner;
 import org.jsoup.Jsoup;
 
-public class Main {
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+
+
+
+public class Main extends Application {
+	
+	static List<AnalyzedWord> wordList;
 
 	public static void main(String[] args) throws IOException {
-
-		List<AnalyzedWord> wordList = new ArrayList<AnalyzedWord>();
+		
+		
+		wordList = new ArrayList<AnalyzedWord>();
+		
 		URL readUrl = new URL("http://shakespeare.mit.edu/macbeth/full.html");
 
 		// Uses JSoup library to parse html text to plaintext string
@@ -34,7 +57,7 @@ public class Main {
 		for (AnalyzedWord listedWord : wordList) {
 				
 				// Compares scanned word to all listed word to see if it is a duplicate
-				if (listedWord.getWord().compareTo(scannedWord) == 0) {
+				if (listedWord.getWord().equalsIgnoreCase(scannedWord) == true) {
 
 					listedWord.addOccurence();
 					isNewWord = false;
@@ -58,7 +81,68 @@ public class Main {
 	
 		scanner.close();
 		System.out.println("Scanner closed");
+		launch(args);
 
+	}
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
+		//Setting up window
+		Stage window = new Stage();
+		window.setHeight(300);
+		window.setWidth(400);
+		window.setTitle("Text Analyzer");
+		
+		
+		
+		
+		//Creating First Layout
+		StackPane first = new StackPane();
+		
+		first.setPadding(new Insets(25,25,25,25));
+		
+		Label intro = new Label("Text Analyzer counts word occurences in Macbeth");
+		StackPane.setAlignment(intro,Pos.TOP_CENTER);
+		
+		Button startButton = new Button("Start Program");
+		first.getChildren().addAll(intro,startButton);
+		
+		//Creating Second Layout
+		GridPane second = new GridPane();
+		second.setPadding(new Insets(25,25,25,25));
+		second.setAlignment(Pos.CENTER_LEFT);
+		TextArea text = new TextArea(wordList.toString().replaceAll("[\\],\\[,?.;:,!]", ""));
+		text.setMinSize(900, 700);
+		second.getChildren().add(text);
+		
+		//Adding layout to scenes
+		Scene scene1 = new Scene(first);
+		Scene scene2 = new Scene(second);
+	
+		//Creating Scene Start and Switch capabilities 
+		window.setScene(scene1);
+		startButton.setOnAction(new EventHandler<ActionEvent>(){
+			
+			public void handle(ActionEvent event) {
+				
+				window.setHeight(800);
+				window.setWidth(1000);
+				window.setScene(scene2);
+			
+			
+			
+			}
+		});
+		
+		
+		window.show();
+		
 	}
 
 }
