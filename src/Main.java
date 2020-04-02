@@ -28,7 +28,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	static List<AnalyzedWord> wordList;
-
+	
+	
+/**
+ * 
+ * Main function for program that counts and displays the amount of times each word appears in Macbeth appears.
+ * 
+ * 
+ * 
+ */
 	public static void main(String[] args) throws IOException {
 		
 		
@@ -36,14 +44,9 @@ public class Main extends Application {
 		
 		URL readUrl = new URL("http://shakespeare.mit.edu/macbeth/full.html");
 
-		// Uses JSoup library to parse html text to plaintext string
-		String plainText = Jsoup.parse(readUrl.openStream(), null, "http://shakespeare.mit.edu/macbeth/full.html")
-				.wholeText();
+		
 
-		// Creates new string with no punctuation
-		String plainTextNoPunc = plainText.replaceAll("[?.;:,!]", "");
-
-		Scanner scanner = new Scanner(plainTextNoPunc);
+		Scanner scanner = new Scanner(HTMLtoPlaintext.parseHtml(readUrl));
 
 		while (scanner.hasNext())
 
