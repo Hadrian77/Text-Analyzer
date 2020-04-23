@@ -36,7 +36,7 @@ public class HTMLtoPlaintext {
 		}
 
 		// Creates new string with no punctuation
-		String plainTextNoPunc = plainText.replaceAll("[?.;:,!]", "");
+		String plainTextNoPunc = plainText.replaceAll("[?.;:,!|-]", "");
 
 		
 		
