@@ -6,6 +6,8 @@ import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
 
+//Test
+
 class DatabaseTest {
 
 	@Test
